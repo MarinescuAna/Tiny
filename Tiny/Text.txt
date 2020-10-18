@@ -1,0 +1,22 @@
+char a = 5;
+char a3 = 'e';
+\\ write a;
+\\ write a;
+read *ar___;
+if(a+b+c==e){
+return 54;
+}else{
+	return a!=b;
+}
+a=4,b=5;
+c=a/b;
+c=a*b;
+c=a-b;
+while(a>b){
+write 4;
+}
+int a[4];
+
+write a.length;
+\\ write a;
+\\ write a;

@@ -2,6 +2,7 @@ D			[0-9]
 L			[a-zA-Z]
 H			[a-fA-F0-9]
 U			[_]
+
 %{
 #include <stdio.h>
 #include "symbols.h"
@@ -38,14 +39,15 @@ void count();
 "char"		{ count(); return(CHAR); }
 "<"			{ count(); return(LESS); }
 
-{L}+{L}*{D}*{U}*  {count(); return(NAME);}
-{D}+			  {count(); return(NUMBER);}
-\'?{L}?\'?		  {count(); return(QCHAR);}
+{L}+{L}*{D}*{U}*  			{ count(); return(NAME);}
+{D}+			  			{ count(); return(NUMBER);}
+\'.\'		  	  			{ count(); return(QCHAR); }
+{U}*{D}+{L}+{L}*{D}*{U}*  	{ count(); return(ERROR);}
 
 \\ 			{ count(); comment();}
 
 [\t\v\n]	{ count(); }
-.			{ /* ignore bad characters */ }
+.			{ }
 
 %%
 
@@ -61,8 +63,8 @@ comment()
 	char c;
 	while ((c = input()) != '\n' && c != 0)
 		putchar(c);
+	printf("\n");
 }
-
 
 int column = 0;
 

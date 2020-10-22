@@ -1,4 +1,6 @@
-char a = 5;
+int _25add;
+int 25add(
+char a3 = 'e ;
 char a3 = 'e';
 \\ write a;
 \\ write a;
@@ -14,6 +16,7 @@ c=a*b;
 c=a-b;
 while(a>b){
 write 4;
+write $;
 }
 int a[4];
 

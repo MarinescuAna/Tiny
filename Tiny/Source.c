@@ -47,7 +47,10 @@ int main() {
 		printf("Fisierul nu poate fi deschis");
 
 	while ((tokenValue = yylex()) != END) {
-		printf(" -> token = %s(%d)\n", lexUnits[tokenValue],tokenValue);
+		if (tokenValue == -1)
+			printf(" -> token -> ERROR(-1)\n");
+		else
+			printf(" -> token = %s(%d)\n", lexUnits[tokenValue],tokenValue);
 	}
 
 	return 0;

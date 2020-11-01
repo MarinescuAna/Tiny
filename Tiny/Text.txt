@@ -1,5 +1,5 @@
 int _25add;
-int 25add(
+int add_245_(
 char a3 = 'e ;
 char a3 = 'e';
 \\ write a;

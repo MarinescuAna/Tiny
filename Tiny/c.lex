@@ -39,10 +39,9 @@ void count();
 "char"		{ count(); return(CHAR); }
 "<"			{ count(); return(LESS); }
 
-{L}+{L}*{D}*{U}*  			{ count(); return(NAME);}
+{L}({L}|{D}|{U})*  			{ count(); return(NAME);}
 {D}+			  			{ count(); return(NUMBER);}
 \'.\'		  	  			{ count(); return(QCHAR); }
-{U}*{D}+{L}+{L}*{D}*{U}*  	{ count(); return(ERROR);}
 
 \\ 			{ count(); comment();}
 

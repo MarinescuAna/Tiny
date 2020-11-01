@@ -1,6 +1,5 @@
 #ifndef __SYMBOLS_H__
 #define __SYMBOLS_H__
-#define ERROR -1
 #define END 0
 #define RETURN 1
 #define RBRACE 2

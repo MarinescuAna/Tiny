@@ -1,2 +1,7 @@
 ﻿  Source.c
+  lex.yy.c
+c.lex(46,19): warning C4013: 'comment' undefined; assuming extern returning int
+lex.yy.c(1519,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  Generating Code...
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\c.lex(66): warning C4716: 'comment': must return a value
   Tiny.vcxproj -> C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\Debug\Tiny.exe

@@ -85,7 +85,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>CRT_SECURE_NO_WARNINGS;SRC_NONSTDC_NO_DEPRECATE;YY_NO_UNISTD_H;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CRT_SECURE_NO_WARNINGS;SRC_NONSTDC_NO_DEPRECATE;YY_NO_UNISTD_H;YYDEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
@@ -93,6 +93,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>win_flex c.lex
+win_bison c.y --defines</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -140,14 +144,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="symbols.h" />
+    <ClInclude Include="c.tab.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="c.tab.c" />
     <ClCompile Include="lex.yy.c" />
     <ClCompile Include="Source.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="c.lex" />
+    <None Include="c.output" />
+    <None Include="c.y" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

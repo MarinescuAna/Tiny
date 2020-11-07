@@ -1,57 +1,43 @@
 
 
 #include <stdio.h>
-#include "symbols.h"
 
+extern int yyparse(void);
 extern FILE* yyin;
-extern int yylex(void);
-const char* lexUnits[] = { "END",
-							"RETURN",
-							"RBRACE",
-							"SEMICOLON",
-							"TIMES",
-							"WRITE",
-							"NOT",
-							"IF",
-							"LPAR",
-							"LBRACK",
-							"COMMA",
-							"DIVIDE",
-							"READ",
-							"LENGTH",
-							"ELSE",
-							"RPAR",
-							"RBRACK",
-							"PLUS",
-							"EQUAL",
-							"GREATER",
-							"WHILE",
-							"NEQUAL",
-							"LBRACE",
-							"ASSIGN",
-							"MINUS",
-							"CHAR",
-							"LESS",
-							"NAME",
-							"NUMBER",
-							"QCHAR",
-							"INT"
-};
+extern int yydebug;
 
 int main() {
 
-	int tokenValue = 0;
+	yydebug = 1;
 	yyin = fopen("Text.txt", "rt");
 
-	if (yyin == NULL)
-		printf("Fisierul nu poate fi deschis");
+	if (yyin != NULL)
+	{
+		int result = yyparse();
+		switch (result)
+		{
+		case 0:
+			printf("Parse successfull.\n");
+			break;
 
-	while ((tokenValue = yylex()) != END) {
-		if (tokenValue == -1)
-			printf(" -> token -> ERROR(-1)\n");
-		else
-			printf(" -> token = %s(%d)\n", lexUnits[tokenValue],tokenValue);
+		case 1:
+			printf("Invalid input encountered\n");
+			break;
+
+		case 2:
+			printf("Out of memory\n");
+			break;
+
+		default:
+			break;
+		}
+		fclose(yyin);
 	}
+	else
+	{
+		printf("Fisier inexistent");
+	}
+
 
 	return 0;
 }

@@ -1,1 +1,15 @@
-int ab = 3
+
+int[100] array;
+char var;
+int sum;
+
+int main(char[max] args, int count){
+int i;
+i=0;
+sum=0;
+while(i<length array){
+sum=sum+array[i];
+}
+write sum;
+return 0;
+}

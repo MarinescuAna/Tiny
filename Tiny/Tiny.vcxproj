@@ -156,7 +156,6 @@ win_bison c.y --defines</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="c.lex" />
-    <None Include="c.output" />
     <None Include="c.y" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

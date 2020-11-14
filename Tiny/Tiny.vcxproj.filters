@@ -37,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="c.lex" />
-    <None Include="c.output" />
     <None Include="c.y" />
   </ItemGroup>
 </Project>

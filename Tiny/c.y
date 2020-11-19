@@ -36,17 +36,6 @@ extern int yylex(void);
 %token RBRACE 
 %token SEMICOLON 
 
-
-
-%left GREATER LESS EQUAL NEQUAL
-%left PLUS MINUS 
-%left TIMES DIVIDE
-%left LBRACK RPAR RBRACE LBRACE LPAR RBRACK
-%left COMMA
-%nonassoc IF ELSE
-
-
-
 %start program
 %%
 
@@ -54,7 +43,7 @@ program : program declaration
         | declaration
         ;
 declaration : fun_declaration
-            | var_declarations
+            | var_declaration
             ;
 fun_declaration : type NAME LPAR formal_pars RPAR block
                 ;

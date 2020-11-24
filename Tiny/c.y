@@ -39,96 +39,94 @@ extern int yylex(void);
 %start program
 %%
 
-program : program declaration
-        | declaration
+
+program : declaration										
+		| program declaration								
         ;
-declaration : fun_declaration
-            | var_declaration
+
+declaration : fun_declaration								
+            | var_declaration								
             ;
-fun_declaration : type NAME LPAR formal_pars RPAR block
+
+fun_declaration : type NAME LPAR formal_pars RPAR block     
                 ;
-formal_pars : formal_par 
-            | formal_pars COMMA formal_par 
-            | 
+
+formal_pars : formal_par									
+            | formal_pars COMMA formal_par					
+            | 												
             ;
-formal_par : type NAME
+
+formal_par : type NAME										
            ;
-block : LBRACE var_declarations statements RBRACE
-      | LBRACE statements RBRACE
+
+block : LBRACE var_declarations statements RBRACE			
+      | LBRACE statements RBRACE							
       ;
-var_declarations: var_declaration
-                | var_declarations var_declaration
+
+var_declarations: var_declaration							
+                | var_declarations var_declaration			
                 ;
-var_declaration : type NAME SEMICOLON
+
+var_declaration : type NAME SEMICOLON						
                 ;
-type : INT
-     | CHAR
-     | type LBRACK exp RBRACK 
+type : INT													
+     | CHAR													
+     | type LBRACK exp RBRACK								
      ;
 		
-statements : statement statement_semicol
-		   |
+statements : statement statement_semicol					
+		   |												
 		   ;
 
-statement_semicol : statement_semicol statement 
-				  | 
+statement_semicol : statement_semicol statement				
+				  | 										
 				  ;
 
-statement : statement_no_loop SEMICOLON
-		  | statement_loop
+statement : lexp ASSIGN exp SEMICOLON						
+		  | RETURN exp SEMICOLON							
+		  | NAME LPAR pars RPAR								
+		  | WRITE exp SEMICOLON								
+		  | READ lexp SEMICOLON								
+		  | IF LPAR exp RPAR statement						
+		  | IF LPAR exp RPAR statement ELSE statement		
+		  | WHILE LPAR exp RPAR statement					
+		  | block											
 		  ;
-			  
-statement_no_loop : lexp ASSIGN exp
-			      | RETURN exp
-			      | NAME LPAR pars RPAR    
-			      | WRITE exp
-			      | READ lexp
-			      ;
 
-statement_loop : IF LPAR exp RPAR statement
-			   | IF LPAR exp RPAR statement ELSE statement
-			   | WHILE LPAR exp RPAR statement
-			   | block
-			   ;
-
-lexp : var
-	 | lexp LBRACK exp RBRACK   
+lexp : var													
+	 | lexp LBRACK exp RBRACK								
 	 ;
 	   
-exp : lexp
-	| exp binop exp
-	| unop exp
-	| LPAR exp RPAR
-	| NUMBER
-	| NAME LPAR pars RPAR   
-	| QCHAR
-	| LENGTH lexp   
+exp : lexp													
+	| exp binop exp											
+	| unop exp												
+	| LPAR exp RPAR											
+	| NUMBER												
+	| NAME LPAR pars RPAR									
+	| QCHAR													
+	| LENGTH lexp											
 	;
 	  
-binop : PLUS
-	  | MINUS
-	  | TIMES
-	  | DIVIDE
-	  | EQUAL
-	  | NEQUAL
-	  | GREATER
-	  | LESS
+binop : PLUS												
+	  | MINUS												
+	  | TIMES												
+	  | DIVIDE												
+	  | EQUAL												
+	  | NEQUAL												
+	  | GREATER												
+	  | LESS												
 	  ;
 		
-unop : NOT
+unop : NOT													
 	 ;
 	   
-pars : exp comma_exp 
-	 |
-	 ;		
-		
-		
-comma_exp : comma_exp COMMA exp
-	      |
-		  ; 	
+pars : exp													
+	 | pars COMMA exp										
+	 ;			
 
-var : NAME
+var : NAME													
 	;
+
 
 
 %%

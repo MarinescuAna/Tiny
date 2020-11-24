@@ -1,10 +1,12 @@
 
 
 #include <stdio.h>
+#include "ast.h"
 
 extern int yyparse(void);
 extern FILE* yyin;
 extern int yydebug;
+extern Node* astRoot;
 
 int main() {
 
@@ -31,6 +33,7 @@ int main() {
 		default:
 			break;
 		}
+		printAst(astRoot, 0);
 		fclose(yyin);
 	}
 	else

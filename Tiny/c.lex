@@ -5,6 +5,7 @@ U			[_]
 
 %{
 #include <stdio.h>
+#include "ast.h"
 #include "c.tab.h"
 
 void count();
@@ -39,8 +40,8 @@ void count();
 "char"		{ count(); return(CHAR); }
 "<"			{ count(); return(LESS); }
 
-{L}({L}|{D}|{U})*  			{ count(); return(NAME);}
-{D}+			  			{ count(); return(NUMBER);}
+{L}({L}|{D}|{U})*  			{ count(); yylval.strings = strdup(yytext);  return(NAME);}
+{D}+			  			{ count(); yylval.intVal = atoi(yytext); return(NUMBER);}
 \'.\'		  	  			{ count(); return(QCHAR); }
 
 \\ 			{ count(); comment();}

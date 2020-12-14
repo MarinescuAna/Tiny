@@ -146,12 +146,14 @@ win_bison c.y --defines</Command>
   <ItemGroup>
     <ClInclude Include="ast.h" />
     <ClInclude Include="c.tab.h" />
+    <ClInclude Include="SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ast.c" />
     <ClCompile Include="c.tab.c" />
     <ClCompile Include="lex.yy.c" />
     <ClCompile Include="Source.c" />
+    <ClCompile Include="SymbolTable.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

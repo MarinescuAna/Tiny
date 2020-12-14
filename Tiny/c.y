@@ -11,7 +11,8 @@ extern int yylex(void);
 	
 	Node* node;
 	char* strings;
-	int intVal;
+	char* intVal;
+	char* qchar;
 }
 %token INT 
 %token CHAR
@@ -19,7 +20,7 @@ extern int yylex(void);
 %token <strings> NAME
 %token LPAR 
 %token COMMA
-%token QCHAR 
+%token <qchar> QCHAR 
 %token <intVal> NUMBER 
 %token TIMES 
 %token DIVIDE 
@@ -79,7 +80,7 @@ fun_declaration : type NAME LPAR formal_pars RPAR block     { $$ = createFunctio
 
 formal_pars : formal_par									{ $$ = createListNode("ParametersList", $1);}
             | formal_pars COMMA formal_par					{ $$ = $1; addLinkToList($$, $3); }
-            | 												{ $$ = createListNode("", NULL); }
+            | 												{ }
             ;
 
 formal_par : type NAME										{ $$ = createVarDeclaration($1, $2);}
@@ -101,36 +102,36 @@ type : INT													{ $$ = createTypeSpecifier("INT"); }
      ;
 		
 statements : statement statement_semicol					{ $$ = createStatement($1, $2); }
-		   |												{ $$ = createListNode("", NULL); }
+		   |												{  }
 		   ;
 
-statement_semicol : statement_semicol statement				{ $$ = createListNode("Statement", $2); }
-				  | 										{ $$ = createListNode("", NULL); }
+statement_semicol : statement_semicol statement				{ $$ = createStatement(NULL, $2);  }
+				  | 										{  }
 				  ;
 
 statement : lexp ASSIGN exp SEMICOLON						{ $$ = createAssignStatement($1,$3); }
-		  | RETURN exp SEMICOLON							{ $$ = createReturnStatement($2); }
+		  | RETURN exp SEMICOLON							{ $$ = createReadWriteLengthReturn($2,3); }
 		  | NAME LPAR pars RPAR								{ $$ = createFunctionCall($1,$3); }
-		  | WRITE exp SEMICOLON								{ $$ = createIOStatement($2,1); }
-		  | READ lexp SEMICOLON								{ $$ = createIOStatement($2,2); }
+		  | WRITE exp SEMICOLON								{ $$ = createReadWriteLengthReturn($2,1); }
+		  | READ lexp SEMICOLON								{ $$ = createReadWriteLengthReturn($2,2); }
 		  | IF LPAR exp RPAR statement						{ $$ = createIfStatement($3,$5,NULL); }
 		  | IF LPAR exp RPAR statement ELSE statement		{ $$ = createIfStatement($3,$5,$7); }
 		  | WHILE LPAR exp RPAR statement					{ $$ = createWhileStatement($3,$5); }
 		  | block											{ $$ = createListNode("Block", $1); }
 		  ;
 
-lexp : var													{ $$ = createListNode("VarName", $1); }
+lexp : var													{  }
 	 | lexp LBRACK exp RBRACK								{ $$ = createAccessStatement($1, $3); }
 	 ;
 	   
-exp : lexp													{ $$ = createListNode("lexp", $1); }
+exp : lexp													{  }
 	| exp binop exp											{ $$ = createOperation($1, $2, $3); }
 	| unop exp												{ $$ = createOperation($1, $2, NULL); }
 	| LPAR exp RPAR											{ $$ = createListNode("Expression", $2); }
-	| NUMBER												{ $$ = createTypeSpecifier("NUMBER"); }
+	| NUMBER												{ $$ = createTypeValue($1,3); }
 	| NAME LPAR pars RPAR									{ $$ = createFunctionCall($1,$3); }   
-	| QCHAR													{ $$ = createTypeSpecifier("QCHAR"); }
-	| LENGTH lexp											{ $$ = createLengthStatement($2); }
+	| QCHAR													{ $$ = createTypeValue($1,2); }
+	| LENGTH lexp											{ $$ = createReadWriteLengthReturn($2,4); }
 	;
 	  
 binop : PLUS												{ $$ = createOperator("PLUS"); }
@@ -150,7 +151,7 @@ pars : exp													{ $$ = createListNode("Expression", $1);}
 	 | pars COMMA exp										{ $$ = $1; addLinkToList($$, $3); }
 	 ;			
 
-var : NAME													{ $$ = createTypeSpecifier("NAME"); }
+var : NAME													{ $$ = createTypeValue($1,1); }
 	;
 
 

@@ -97,9 +97,10 @@ union YYSTYPE
 	
 	Node* node;
 	char* strings;
-	int intVal;
+	char* intVal;
+	char* qchar;
 
-#line 103 "c.tab.h"
+#line 104 "c.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

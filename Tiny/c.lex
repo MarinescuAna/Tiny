@@ -41,8 +41,8 @@ void count();
 "<"			{ count(); return(LESS); }
 
 {L}({L}|{D}|{U})*  			{ count(); yylval.strings = strdup(yytext);  return(NAME);}
-{D}+			  			{ count(); yylval.intVal = atoi(yytext); return(NUMBER);}
-\'.\'		  	  			{ count(); return(QCHAR); }
+{D}+			  			{ count(); yylval.intVal = strdup(yytext); return(NUMBER);}
+\'.\'		  	  			{ count(); yylval.qchar = strdup(yytext); return(QCHAR); }
 
 \\ 			{ count(); comment();}
 

@@ -69,11 +69,18 @@ Node* createDeclarationNode(Node* varDeclaration)
 }
 Node* createFunctionDefinitionNode(Node* typeSpecifier, const char* functionName, Node* paramsList, Node* compoundStatement)
 {
-
-	Node* retNode = createDefaultNode("FunctionDefinition", 3);
-
-	if (retNode)
+	Node* retNode;
+	if (paramsList->type == NULL_HEX)
 	{
+		retNode = createDefaultNode("FunctionDefinition", 2);
+		retNode->links[0] = typeSpecifier;
+		retNode->links[1] = compoundStatement;
+		if (functionName)
+			strcpy(retNode->extraData, functionName);
+	}
+	else
+	{
+		retNode = createDefaultNode("FunctionDefinition", 3);
 		retNode->links[0] = typeSpecifier;
 		retNode->links[1] = paramsList;
 		retNode->links[2] = compoundStatement;
@@ -84,27 +91,36 @@ Node* createFunctionDefinitionNode(Node* typeSpecifier, const char* functionName
 	return retNode;
 }
 Node* createBlock(Node* varDeclaration, Node* statement) {
-	Node* retNode = createDefaultNode("Block", 2);
-	if (varDeclaration == NULL) {
-		retNode->links[0] = statement;
+	Node* retNode;
+	if (varDeclaration == NULL && statement->type == NULL_HEX) {
+		retNode = createDefaultNode("Block", 0);
+		sprintf(retNode->extraData, " %s ", "EmptyBlock");
 	}
 	else {
-		retNode->links[0] = varDeclaration;
-		retNode->links[1] = statement;
+		if (varDeclaration == NULL) {
+			retNode = createDefaultNode("Block", 1);
+			retNode->links[0] = statement;
+		}
+		else {
+			retNode = createDefaultNode("Block", 2);
+			retNode->links[0] = statement;
+			retNode->links[1] = varDeclaration;
+		}
 	}
 
 	return retNode;
 }
 Node* createVarDeclaration(Node* typeSpecifier, const char* varName)
 {
-	Node* retNode = createDefaultNode("FormalParameter", 2);
+	Node* retNode = createDefaultNode("FormalParameter", 1);
 
 	if (retNode)
 	{
 		retNode->links[0] = typeSpecifier;
 		if (varName)
-			sprintf(retNode->extraData, "%s", varName);
-		retNode->links[1] = createDefaultNode("IntValue", 0);
+		{
+			sprintf(retNode->extraData, " %s ", varName);
+		}
 	}
 
 	return retNode;
@@ -116,49 +132,60 @@ Node* createAssignStatement(Node* lexp, Node* exp) {
 	retNode->links[1] = exp;
 	return retNode;
 }
-Node* createReturnStatement(Node* exp) {
-	Node* retNode = createDefaultNode("ReturnStatement", 2);
-	retNode->links[0] = exp;
-	return retNode;
-}
+
 Node* createFunctionCall(const char* functionName, Node* paramList) {
-	Node* retNode = createDefaultNode("FunctionCall", 2);
+	Node* retNode = createDefaultNode("FunctionCall", 1);
 	retNode->links[0] = paramList;
 	if (functionName)
-		sprintf(retNode->extraData, "%s", functionName);
+		sprintf(retNode->extraData, " %s ", functionName);
 	return retNode;
 }
-Node* createIOStatement(Node* exp, unsigned int type) {
-	Node* retNode = NULL;
+Node* createReadWriteLengthReturn(Node* exp, unsigned int type) {
+	Node* retNode;
 	if (type == 1) {
-		retNode = createDefaultNode("WriteStatement", 2);
+		retNode = createDefaultNode("Write", 1);
 	}
 	else {
-		retNode = createDefaultNode("ReadStatement", 2);
+		if (type == 2)
+		{
+			retNode = createDefaultNode("Read", 1);
+		}
+		else {
+			if (type == 3) {
+				retNode = createDefaultNode("Return", 1);
+			}
+			else {
+				retNode = createDefaultNode("Length", 1);
+			}
+		}
 	}
 	retNode->links[0] = exp;
-	return retNode;
-}
-Node* createLengthStatement(Node* lexp) {
-	Node* retNode = createDefaultNode("Length", 2);
-	retNode->links[0] = lexp;
 	return retNode;
 }
 Node* createArrayDeclaration(Node* typeSpecifier, Node* exp) {
-	Node* retNode = createDefaultNode("ArrayStatement", 2);
+	Node* retNode = createDefaultNode("Array", 2);
 	retNode->links[0] = typeSpecifier;
 	retNode->links[1] = exp;
 	return retNode;
 }
 Node* createStatement(Node* statement, Node* statement_col) {
-	Node* retNode = createDefaultNode("Statement", 2);
-	retNode->links[0] = statement;
-	retNode->links[1] = statement_col;
+	Node* retNode;
+	if (statement == NULL) {
+		retNode = createDefaultNode("Statement", 1);
+		retNode->links[0] = statement_col;
+	}
+	else
+	{
+		retNode = createDefaultNode("Statement", 2);
+		retNode->links[0] = statement;
+		retNode->links[1] = statement_col;
+	}
+
 	return retNode;
 }
 Node* createIfStatement(Node* exp, Node* thenStatement, Node* elseStatement)
 {
-	Node* retNode = createDefaultNode("IfStatement", 2);
+	Node* retNode = createDefaultNode("IfStatement", 3);
 	retNode->links[0] = exp;
 	retNode->links[1] = thenStatement;
 	retNode->links[2] = elseStatement;
@@ -179,13 +206,31 @@ Node* createWhileStatement(Node* exp, Node* Statement) {
 }
 Node* createTypeSpecifier(const char* typeName)
 {
-	Node* retVal = createDefaultNode("TypeSpecifier", 0);
-	if (typeName)
-		sprintf(retVal->extraData, "%s", typeName);
+	Node* retVal = createDefaultNode("Type", 0);
+	sprintf(retVal->extraData, " %s ", typeName);
+	retVal->links = NULL;
+	return retVal;
+}
+Node* createTypeValue(const char* typeName, int index)
+{
+	Node* retVal;
+	if (index == 1) {
+		retVal = createDefaultNode("NAME", 0);
+	}
+	else {
+		if (index == 2) {
+			retVal = createDefaultNode("QCHAR", 0);
+		}
+		else {
+			retVal = createDefaultNode("NUMBER", 0);
+		}
+	}
+	sprintf(retVal->extraData, " %s ", typeName);
+	retVal->links = NULL;
 	return retVal;
 }
 Node* createOperation(Node* exp, Node* binop, Node* exp2) {
-	Node* retNode = createDefaultNode("Operation", 2);
+	Node* retNode = createDefaultNode("Operation", 3);
 	retNode->links[0] = exp;
 	retNode->links[1] = binop;
 	if (exp2 != NULL) {
@@ -196,9 +241,9 @@ Node* createOperation(Node* exp, Node* binop, Node* exp2) {
 }
 Node* createOperator(const char* operatorName)
 {
-	Node* retVal = createDefaultNode("Operator", 2);
+	Node* retVal = createDefaultNode("Operator", 0);
 	if (operatorName)
-		sprintf(retVal->extraData, "%s", operatorName);
+		sprintf(retVal->extraData, " %s ", operatorName);
 	return retVal;
 }
 
@@ -213,7 +258,7 @@ void printAst(Node* ast, int level)
 		}
 		if (ast->type)
 		{
-			printf("%s ", ast->type);
+			printf(" %s ", ast->type);
 		}
 		if (ast->numLinks)
 		{

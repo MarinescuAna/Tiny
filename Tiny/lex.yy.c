@@ -908,12 +908,12 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 44 "c.lex"
-{ count(); yylval.intVal = atoi(yytext); return(NUMBER);}
+{ count(); yylval.intVal = strdup(yytext); return(NUMBER);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 45 "c.lex"
-{ count(); return(QCHAR); }
+{ count(); yylval.qchar = strdup(yytext); return(QCHAR); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP

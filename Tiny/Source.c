@@ -1,16 +1,16 @@
-
-
 #include <stdio.h>
 #include "ast.h"
+#include "SymbolTable.h"
 
 extern int yyparse(void);
 extern FILE* yyin;
 extern int yydebug;
 extern Node* astRoot;
+SymbolTable* symbolTable;
 
 int main() {
 
-	yydebug = 1;
+	//yydebug = 1;
 	yyin = fopen("Text.txt", "rt");
 
 	if (yyin != NULL)
@@ -19,26 +19,30 @@ int main() {
 		switch (result)
 		{
 		case 0:
-			printf("Parse successfull.\n");
+			printf("\nParse successfull.\n");
 			break;
 
 		case 1:
-			printf("Invalid input encountered\n");
+			printf("\nInvalid input encountered\n");
 			break;
 
 		case 2:
-			printf("Out of memory\n");
+			printf("\nOut of memory\n");
 			break;
 
 		default:
 			break;
 		}
+		printf("\n\n");
 		printAst(astRoot, 0);
+		printf("\n\n");
+		createTable(astRoot, symbolTable,NULL,NULL);
+		printTable(symbolTable);
 		fclose(yyin);
 	}
 	else
 	{
-		printf("Fisier inexistent");
+		printf("\nFisier inexistent");
 	}
 
 

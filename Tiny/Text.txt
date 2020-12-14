@@ -1,16 +1,12 @@
-int[100] array;
-char var;
-int sum;
+int t;
+int c;
 
-int main(char[max] args, int count){
-int i;
-i=0;
-sum=0;
-while(i<length array){
-sum=sum+array[i];
+int main(char paramMain){
+int mainVar;
+read t;
 }
 
-write sum;
+char main2(char paramMain2){
+int main2Var;
+write t;
 }
-
-

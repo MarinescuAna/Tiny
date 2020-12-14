@@ -11,10 +11,12 @@
 *.ilk
 *.map
 *.exp
+*.db
 
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Libraries
 *.lib
@@ -27,6 +29,9 @@
 *.so
 *.so.*
 *.dylib
+*.db
+*.db-*
+*.opendb
 
 # Executables
 *.exe
@@ -50,3 +55,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+

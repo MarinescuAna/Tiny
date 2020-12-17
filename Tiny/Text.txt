@@ -3,7 +3,11 @@ int c;
 
 int main(char paramMain){
 int mainVar;
+if(t>c){
 read t;
+}else{
+write g;
+}
 }
 
 char main2(char paramMain2){

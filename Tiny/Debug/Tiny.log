@@ -1,9 +1,16 @@
-﻿c.y : warning : 18 shift/reduce conflicts [-Wconflicts-sr]
+﻿c.y : warning : 17 shift/reduce conflicts [-Wconflicts-sr]
   c.y: note: rerun with option '-Wcounterexamples' to generate conflict counterexamples
+  ast.c
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\ast.c(73,34): warning C4047: '==': 'char [50]' differs in levels of indirection from 'unsigned long'
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\ast.c(95,59): warning C4047: '==': 'char [50]' differs in levels of indirection from 'unsigned long'
   c.tab.c
   lex.yy.c
-c.lex(46,19): warning C4013: 'comment' undefined; assuming extern returning int
-lex.yy.c(1519,46): warning C4013: 'isatty' undefined; assuming extern returning int
+c.lex(47,19): warning C4013: 'comment' undefined; assuming extern returning int
+lex.yy.c(1520,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  Source.c
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\Source.c(39,35): warning C4133: 'function': incompatible types - from 'SymbolTable *' to 'char *'
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\Source.c(39,41): warning C4020: 'createTable': too many actual parameters
+  SymbolTable.c
   Generating Code...
-C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\c.lex(66): warning C4716: 'comment': must return a value
+C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\c.lex(67): warning C4716: 'comment': must return a value
   Tiny.vcxproj -> C:\Users\marin\OneDrive\Documente\GitHub\PT\Tiny\Debug\Tiny.exe

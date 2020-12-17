@@ -143,23 +143,22 @@ Node* createFunctionCall(const char* functionName, Node* paramList) {
 Node* createReadWriteLengthReturn(Node* exp, unsigned int type) {
 	Node* retNode;
 	if (type == 1) {
-		retNode = createDefaultNode("Write", 1);
+		retNode = createDefaultNode("Write", 0);
 	}
 	else {
 		if (type == 2)
 		{
-			retNode = createDefaultNode("Read", 1);
+			retNode = createDefaultNode("Read", 0);
 		}
 		else {
 			if (type == 3) {
-				retNode = createDefaultNode("Return", 1);
+				retNode = createDefaultNode("Return", 0);
 			}
 			else {
-				retNode = createDefaultNode("Length", 1);
+				retNode = createDefaultNode("Length", 0);
 			}
 		}
 	}
-	retNode->links[0] = exp;
 	return retNode;
 }
 Node* createArrayDeclaration(Node* typeSpecifier, Node* exp) {

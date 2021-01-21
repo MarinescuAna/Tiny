@@ -3,7 +3,13 @@ int c;
 
 int main(char paramMain){
 int mainVar;
+int mainVar3;
+if(c>t)
 read t;
+
+while(c==0){
+c=c+1;
+}
 }
 
 char main2(char paramMain2){

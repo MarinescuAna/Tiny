@@ -268,10 +268,9 @@ void printAst(Node* ast, int level)
 		{
 			printf(" - %s\n", ast->extraData);
 		}
-		for (idx = 0; idx < ast->numLinks; idx++)
+		for (idx = 0; idx < ast->numLinks && ast->numLinks< MAX_EXTRA_DATA; idx++)
 		{
-
-			printAst(ast->links[idx], level + 1);
+				printAst(ast->links[idx], level + 1);
 		}
 	}
 }

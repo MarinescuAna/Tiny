@@ -10,7 +10,7 @@ SymbolTable* symbolTable;
 
 int main() {
 
-	//yydebug = 1;
+	yydebug = 1;
 	yyin = fopen("Text.txt", "rt");
 
 	if (yyin != NULL)

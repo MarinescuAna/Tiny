@@ -4,6 +4,7 @@
 #define MAX_NODE_TYPE 50
 #define MAX_EXTRA_DATA 50
 #define NULL_HEX 3435973836
+#define ERROR2 88000900
 
 
 typedef struct node {

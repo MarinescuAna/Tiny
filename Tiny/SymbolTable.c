@@ -79,7 +79,7 @@ void createTable(Node* main, char* functionName , char* functionType) {
 				addItem(main, 1, functionName, functionType);
 			}
 		}
-		for (idx = 0; idx < main->numLinks; idx++)
+		for (idx = 0; idx < main->numLinks && main->numLinks< MAX_EXTRA_DATA; idx++)
 		{
 			createTable(main->links[idx], functionName,functionType);
 		}
